@@ -1,0 +1,41 @@
+class Solution:
+    # @return an integer
+    def romanToInt(self, s):
+        if s is None:
+            return 0
+        result = 0 # final integer sum
+        cnum = 0 # current number
+        pnum = 0 # previous number
+        stack = []
+        for i in xrange(len(s)):
+            cnum = self.switch_basic_roman(s[i])
+            if len(stack) == 0:
+                pnum = 0
+            else:
+                pnum = stack[-1]
+            if cnum:
+                if cnum>pnum:
+                    result = result + cnum-2*pnum
+                else:
+                    result = result + cnum
+            stack.append(cnum)
+        return result
+        
+    # @return an integer of a single char roman numeral
+    def switch_basic_roman(self, c):
+        if c is 'I':
+            return 1
+        elif c is 'V':
+            return 5
+        elif c is 'X':
+            return 10
+        elif c is 'L':
+            return 50
+        elif c is 'C':
+            return 100
+        elif c is 'D':
+            return 500
+        elif c is 'M':
+            return 1000
+        else:
+            return None

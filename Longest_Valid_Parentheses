@@ -1,0 +1,31 @@
+class Solution:
+    # @param s, a string
+    # @return an integer
+    def longestValidParentheses(self, s):
+        if s is None:
+            return 0
+        if len(s) < 2:
+            return 0
+            
+        stack = []
+        maxl = 0
+        accl = 0
+        for i in xrange(len(s)):
+            if s[i] is ')':
+                if len(stack) == 0:
+                    accl = 0
+                elif s[stack[-1]] is '(':
+                    mp = stack.pop()
+                    ml = i-mp+1
+                    if len(stack) == 0:
+                        accl = accl + ml
+                        ml = accl
+                    else:
+                        ml = i - stack[-1]
+                    maxl = max(maxl, ml)
+                else:
+                    stack.append(i)
+            else:
+                stack.append(i)
+        return maxl
+                

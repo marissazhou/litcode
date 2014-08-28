@@ -14,8 +14,6 @@ class Solution:
             return l1
         p1 = l1
         p2 = l2
-        mp1 = p1
-        mp2 = p2
         new_head = ListNode(0)
         p = new_head
         while p1 and p2:

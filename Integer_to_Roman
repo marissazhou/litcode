@@ -1,0 +1,60 @@
+class Solution:
+    # @return a string
+    def intToRoman(self, num):
+        if num < 1:
+            return ''
+        result = ''
+        while num>=1:
+            pos_str, rest = self.get_base(num)
+            result = result+pos_str
+            num = rest
+        return result
+        
+    # @return an Roman of a single char roman numeral
+    def get_base(self, c):
+        if c >= 1000:
+            par = c/1000
+            rest = c%1000
+            return 'M'*par, rest
+        elif 1000 > c >= 900:
+            rest = c-900
+            return 'CM', rest
+        elif 900 > c >= 500:
+            par = c/500
+            rest = c%500
+            return 'D'*par, rest
+        elif 500 > c >= 400:
+            rest = c-400
+            return 'CD', rest
+        elif 400 > c >= 100:
+            par = c/100
+            rest = c%100
+            return 'C'*par, rest
+        elif 100 > c >= 90:
+            rest = c-90
+            return 'XC', rest
+        elif 90 > c >= 50:
+            par = c/50
+            rest = c%50
+            return 'L'*par, rest
+        elif 50 > c >= 40:
+            rest = c-40
+            return 'XL', rest
+        elif 40 > c >= 10:
+            par = c/10
+            rest = c%10
+            return 'X'*par, rest
+        elif c == 9:
+            rest = c-9
+            return 'IX', rest
+        elif 9 > c >= 5:
+            par = c/5
+            rest = c%5
+            return 'V'*par, rest
+        elif c == 4:
+            rest = c-4
+            return 'IV', rest
+        elif 4 > c >= 1:
+            return 'I'*c, 0
+        else:
+            return None

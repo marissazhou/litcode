@@ -1,0 +1,15 @@
+class Solution:
+    # @param    A       a list of integers
+    # @param    elem    an integer, value need to be removed
+    # @return an integer
+    def removeElement(self, A, elem):
+        if A is None:
+            return 0
+        result = 0
+        for i in xrange(len(A)):
+            if A[i] != elem:
+                A[result] = A[i]
+                result = result+1
+        return result
+        
+                

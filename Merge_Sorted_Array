@@ -1,0 +1,25 @@
+class Solution:
+    # @param A  a list of integers
+    # @param m  an integer, length of A
+    # @param B  a list of integers
+    # @param n  an integer, length of B
+    # @return nothing
+    def merge(self, A, m, B, n):
+        if A is None:
+            A = B 
+            return
+        if B is None:
+            return
+        point = m+n
+        while m>0 and n>0:
+            if B[n-1] >= A[m-1]:
+                A[point-1] = B[n-1]
+                n = n-1
+            else:
+                A[point-1] = A[m-1]
+                m = m-1
+            point = point-1
+        while n>0:
+            A[point-1] = B[n-1]
+            n = n-1
+            point = point-1

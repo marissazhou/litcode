@@ -1,0 +1,32 @@
+# author: marissazhou
+# date: 29/08/2014
+# idea: dfs 
+
+# Definition for a  binary tree node
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    # @param root, a tree node
+    # @return an integer
+    def maxDepth(self, root):
+        if root is None:
+            return 0
+        stack = [root]
+        dstack = [1]
+        maxDept = 0
+        while len(stack) > 0:
+            cur_node = stack.pop()
+            cur_dept = dstack.pop()
+            maxDept = max(maxDept, cur_dept)
+            if cur_node.right:
+                stack.append(cur_node.right)
+                dstack.append(cur_dept+1)
+            if cur_node.left:
+                stack.append(cur_node.left)
+                dstack.append(cur_dept+1)
+            
+        return maxDept

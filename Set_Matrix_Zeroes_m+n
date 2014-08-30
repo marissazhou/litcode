@@ -1,0 +1,29 @@
+# author: marissazhou
+# date: 29/08/2014
+# idea: m + n solution, set for indexes of row and column where the value is x
+
+class Solution:
+    # @param matrix, a list of lists of integers
+    # RETURN NOTHING, MODIFY matrix IN PLACE.
+    def setZeroes(self, matrix):
+        if matrix is None:
+            return 
+        dict_zero_r = {}
+        dict_zero_c = {}
+        for i in xrange(len(matrix)):
+            for j in xrange(len(matrix[0])):
+                if matrix[i][j] == 0:
+                    dict_zero_r[i] = 1
+                    dict_zero_c[j] = 1
+                    
+        rs = dict_zero_r.keys()
+        cs = dict_zero_c.keys()
+        
+        for i in rs:
+            for j in xrange(len(matrix[0])):
+                matrix[i][j] = 0
+        
+        for j in cs:
+            for i in xrange(len(matrix)):
+                matrix[i][j] = 0
+        

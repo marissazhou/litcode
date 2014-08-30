@@ -1,0 +1,36 @@
+# author: marissazhou
+# date: 30/08/2014
+# idea: look through all strings between '/' and check sign
+
+class Solution:
+    # @param path, a string
+    # @return a string
+    def simplifyPath(self, path):
+        if path is None:
+            return
+        if len(path)<2:
+            return path
+        stack = []
+        i = 1
+        while i < len(path):
+            sstr = ''
+            while i<len(path) and path[i] is not "/":
+                sstr = sstr + path[i]
+                i = i+1
+            if sstr == "..":
+                if len(stack) > 0:
+                    stack.pop()
+            elif sstr == ".":
+                continue
+            elif len(sstr)>0:
+                stack.append(sstr)
+            if i<len(path) and path[i] == '/':
+                i = i+1
+                continue
+        # reunion
+        if len(stack) == 0:
+            return '/'
+        result = ''
+        for i in xrange(len(stack)):
+            result = result+"/"+stack[i]
+        return result

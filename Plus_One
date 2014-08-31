@@ -1,0 +1,23 @@
+# author: marissazhou
+# date: 31/08/2014
+# idea: dfs
+
+class Solution:
+    # @param digits, a list of integer digits
+    # @return a list of integer digits
+    def plusOne(self, digits):
+        if not digits or len(digits) == 0:
+            return []
+        carry = 1
+        result = []
+        for i in xrange(len(digits)-1, -1, -1):
+            num = carry+digits[i]
+            carry = num/10
+            num = num%10
+            digits[i] = num
+            if carry < 1:
+                return digits
+        result.append(1)
+        for i in xrange(0, len(digits)):
+            result.append(digits[i])
+        return result

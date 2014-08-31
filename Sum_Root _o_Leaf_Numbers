@@ -1,0 +1,26 @@
+# author: marissazhou
+# date: 31/08/2014
+# idea: recursively, remember path and mulitply by 10 if it has kids
+
+
+# Definition for a  binary tree node
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    # @param root, a tree node
+    # @return an integer
+    def sumNumbers(self, root):
+        result = self.calculateSum(root, 0)
+        return result
+        
+    def calculateSum(self, root, path):
+        if root is None:
+            return 0
+        path = path*10 +root.val; 
+        if root.left is None and root.right is None:
+            return path
+        return self.calculateSum(root.left, path)+self.calculateSum(root.right, path)

@@ -1,0 +1,15 @@
+# author: marissazhou
+# date: 29/08/2014
+# idea: dynamic programming
+
+
+class Solution:
+    # @return an integer
+    def uniquePaths(self, m, n):
+        if m<=1 or n<=1:
+            return 1
+        steps = [[1]*n]*m
+        for i in xrange(1,m):
+            for j in xrange(1,n):
+                steps[i][j] = steps[i][j-1] + steps[i-1][j] 
+        return steps[m-1][n-1]

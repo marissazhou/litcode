@@ -1,0 +1,34 @@
+# author: marissazhou
+# date: 31/08/2014
+# idea: dfs
+
+# Definition for a  binary tree node
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    # @param root, a tree node
+    # @return an integer
+    def maxPathSum(self, root):
+        self.gmax = float("-inf") # global max
+        self.lMaxSum(root)
+        return self.gmax
+    
+    # @param root, a tree node
+    # @return an integer
+    def lMaxSum(self, root):
+        if root == None:
+             return 0
+        lSum = self.lMaxSum(root.left)
+        rSum = self.lMaxSum(root.right)
+        if lSum<0 and rSum<0:
+            self.gmax = max(self.gmax, root.val)
+            return root.val
+        if lSum>0 and rSum>0:
+            self.gmax = max(self.gmax, root.val+lSum+rSum)
+        maxValueUp = max(lSum, rSum) + root.val
+        self.gmax = max(self.gmax, maxValueUp)
+        return maxValueUp

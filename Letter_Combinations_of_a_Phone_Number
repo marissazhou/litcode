@@ -1,0 +1,33 @@
+# author: marissazhou
+# date: 29/08/2014
+# idea: dfs
+
+class Solution:
+    # @return a list of strings, [s1, s2]
+    def letterCombinations(self, digits):
+        trans = {'0': ' ',
+                    '1': [''],
+                    '2': ['a','b','c'],
+                    '3': ['d','e','f'],
+                    '4': ['g','h','i'],
+                    '5': ['j','k','l'],
+                    '6': ['m','n','o'],
+                    '7': ['p','q','r','s'],
+                    '8': ['t','u','v'],
+                    '9': ['w','x','y','z']}
+        result = []
+        result = self.getCombinations(digits, trans, result)
+        return result
+        
+    def getCombinations(self, digits, trans, result):
+        if len(digits) == 0:
+            return ['']
+        chars = trans[digits[-1]]
+        result = self.getCombinations(digits[0:-1], trans, result)
+        new_result = []
+        for x in chars:
+            new_values = []
+            for p in result: # phrase
+                new_values.append(p+x)
+            new_result = new_result+new_values
+        return new_result

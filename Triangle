@@ -1,0 +1,20 @@
+public class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        if(triangle == null){
+            return 0;
+        }
+        int len = triangle.size();
+        int[] result = new int[len];
+        //int[] row = triangle.get(len-1).toArray();
+        //result[len-1] = Collections.min(row);
+        for (int i=0; i<len; i++) {
+            result[i] = triangle.get(len-1).get(i);
+        }
+        for (int i=len-2; i>=0; i--) {
+            for (int j=0; j<triangle.get(i).size(); j++){
+                result[j] = Math.min(result[j],result[j+1]) + triangle.get(i).get(j);
+            }
+        }
+        return result[0];
+    }
+}

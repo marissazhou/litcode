@@ -1,0 +1,22 @@
+public class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<String>();
+        if (n>0) {
+            getNextSign(n, n,"", result);
+        }
+        return result;
+    }
+
+    public void getNextSign(int nl, int nr, String s, List<String> result) {
+        if (nl == 0 && nr == 0) {
+            result.add(s);
+            return;
+        }
+        if (nl > 0) {
+            getNextSign(nl-1, nr, s+'(', result);
+        }
+        if (nr > 0 && nr > nl) {
+            getNextSign(nl, nr-1, s+')', result);
+        }
+    }
+}

@@ -1,0 +1,19 @@
+public class Solution {
+    public int maxArea(int[] height) {
+        if (height == null || height.length <2) return 0;
+        
+        int mostWater = Math.min(height[0],height[1]); // global maximum
+        int sumWater = mostWater; // local maximum
+        int left = 0;
+        int right = height.length-1;
+        
+        
+        while (left < right) {
+            sumWater = Math.min(height[left],height[right])*(right-left);
+            mostWater = Math.max(mostWater, sumWater);
+            if (height[left]<=height[right]){ left++; }
+            else { right--; }
+        }
+        return mostWater;
+    }
+}

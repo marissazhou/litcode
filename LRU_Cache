@@ -1,0 +1,66 @@
+public class LRUCache {
+    
+    // Entry class for one entry in the cache set, elements of DoubleLinkedList
+    private class Entry{
+        Entry pre;
+        Entry nxt;
+        int key;
+        int val;
+        
+        public Entry(int k, int v){
+            this.key = k;
+            this.val = v;
+            this.pre = null;
+            this.nxt = null;
+        }
+    }
+    
+    // key elements of LRU Cache, a capacity, a hashmap, a head and a tail.
+    private int capacity;
+    private HashMap<Integer, Entry> hm = new HashMap<Integer, Entry>();
+    private Entry head = new Entry(-1,-1);
+    private Entry tail = new Entry(-1,-1);
+    
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        head.nxt = tail;
+        tail.pre = head;
+    }
+    
+    public int get(int key) {
+        if (!hm.containsKey(key)){ return -1;}
+        
+        // mark and cut out current
+        Entry cur = hm.get(key);
+        cur.pre.nxt = cur.nxt;
+        cur.nxt.pre = cur.pre;
+        
+        // move to tail
+        moveToTail(cur);
+        return cur.val;
+    }
+    
+    public void set(int key, int value) {
+        // check whether it exists
+        if (get(key) != -1) {hm.get(key).val = value; return;}
+        
+        // check whether exceed capacity
+        if (hm.size() == capacity){
+            // remove head and add new to tail
+            hm.remove(head.nxt.key);
+            this.head.nxt = this.head.nxt.nxt;
+            this.head.nxt.pre = this.head;
+        }
+            
+        Entry cur = new Entry(key, value);
+        hm.put(key, cur);
+        moveToTail(cur);
+        
+    }
+    public void moveToTail(Entry entry){
+        entry.pre = this.tail.pre;
+        this.tail.pre = entry;
+        entry.pre.nxt = entry;
+        entry.nxt = this.tail;
+    }
+}

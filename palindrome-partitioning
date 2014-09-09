@@ -1,0 +1,31 @@
+public class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> result = new ArrayList<List<String>>();
+        if (s == null || s.length() == 0) return result;
+        
+        ArrayList<String> curList = new ArrayList<String>();
+        //char[] chars = s.toCharArray();
+        getPartition(s, 0, curList, result);
+        return result;
+    }
+    
+    public void getPartition(String s, int start, ArrayList<String> curList, List<List<String>> result){
+        if (start == s.length()) { result.add(new ArrayList<String>(curList)); return; }
+        
+        for(int i=start+1; i<=s.length(); i++){
+            if (!isPalindrome(s.substring(start, i))) {
+                continue;// from start to i-1 is the shortest palindrome
+            }
+            curList.add(s.substring(start, i));
+            getPartition(s, i, curList, result);
+            curList.remove(curList.size()-1);
+        }
+    }
+    
+    public boolean isPalindrome(String chars){
+        for (int i=0;i<chars.length()/2;i++){
+            if (chars.charAt(i) != chars.charAt(chars.length()-1-i)) return false;
+        }
+        return true;
+    }
+}

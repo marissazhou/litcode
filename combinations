@@ -1,0 +1,26 @@
+
+public class Solution {
+
+    //recursion
+    public ArrayList<ArrayList<Integer>> combine(int n, int k) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> curList = new ArrayList<Integer>();
+        
+        helper(result, curList, n, k, 1);
+        return result;
+    }
+    
+    private void helper(ArrayList<ArrayList<Integer>> result, ArrayList<Integer> curList, int n, int k, int start) {
+        if (curList.size() == k){
+            result.add(new ArrayList(curList));
+            return;
+        }
+        
+        for(int i = start; i<= n; i++){
+            curList.add(i);
+            helper(result, curList, n, k, i+1); 
+            curList.remove(curList.size() - 1);
+        }
+    }
+    
+}

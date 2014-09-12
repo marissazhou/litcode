@@ -1,0 +1,56 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null) return;
+        
+        ListNode p1 = head; // slow
+        ListNode p2 = head; // fast
+        while(p2.next!=null && p2.next.next!=null){
+            p1 = p1.next;
+            p2 = p2.next.next;
+        }
+        ListNode nhead = new ListNode(0);
+        nhead.next = p1.next;
+        p1.next = null;
+        p2 = nhead.next; 
+        if(p2!=null) p2=p2.next; 
+        nhead.next.next = null;
+        while(p2 != null){
+            ListNode tmp = p2.next;
+            p2.next =nhead.next;
+            nhead.next = p2;
+            p2=tmp;
+        }
+        head = mergeList(head, nhead.next);
+    }
+    
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        return head;
+    }
+    
+    public ListNode mergeList(ListNode h1, ListNode h2) {
+        if (h1 == null) return h2;
+        if (h2 == null) return h1;
+        
+        ListNode cur = h1;
+        while (h2 != null){
+            ListNode tmp = h2.next;
+            h2.next = cur.next;
+            cur.next = h2;
+            cur = h2.next;
+            h2 = tmp;
+        }
+        return h1;
+    }
+}

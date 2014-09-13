@@ -1,0 +1,39 @@
+/* rewrite */
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        if (s==null || p==null) return true;
+        if (s.length()==0 && p.length()==0) return true;
+        if (s.length()!=0 && p.length()==0) return false;
+        if (s.length()==0 && p.length()!=0) {
+            return checkEmpty(p);
+        }
+        
+        char lastSChar = s.charAt(s.length()-1);
+        char lastPChar = p.charAt(p.length()-1);
+        if (p.length()==1 && lastPChar == '*') return false;
+        
+        if (isChar(lastSChar) && isChar(lastPChar) && lastSChar==lastPChar) return isMatch(s.substring(0,s.length()-1), p.substring(0,p.length()-1));
+        if (isChar(lastSChar) && isChar(lastPChar) && lastSChar!=lastPChar) return false;
+        if (lastPChar == '.')return isMatch(s.substring(0,s.length()-1), p.substring(0,p.length()-1));
+        if (lastPChar == '*'){
+            char pLastPChar = p.charAt(p.length()-2);
+            if (compare(lastSChar, pLastPChar))
+                return isMatch(s.substring(0,s.length()), p.substring(0,p.length()-2)) || isMatch(s.substring(0,s.length()-1), p);
+            else return isMatch(s.substring(0,s.length()), p.substring(0,p.length()-2));
+        }
+    }
+    public boolean isChar(char c){
+        if ('a'<= c && c<='z') return true;
+        return false;
+    }
+    public boolean compare(char c1, char c2){
+        return c2 == '.' || c1 == c1;
+    }
+    public boolean checkEmpty(String p) {
+        if (p.length()%2 != 0) return false; 
+        for (int i = 1; i < p.length(); i+=2) {
+            if (p.charAt(i) != '*')  return false;
+        }
+        return true;
+    }
+}

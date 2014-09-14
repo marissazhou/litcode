@@ -1,0 +1,42 @@
+public class Solution {
+    public boolean isNumber(String s) {
+        if (s==null || s.length()==0) return false;
+        int len = s.length();
+        int h = 0; // head
+        int t = len-1; // tail
+        while(h<len && s.charAt(h)==' ')h++;
+        if (h==len) return false;
+        while(t>=h && s.charAt(t)==' ')t--;
+        if (h==len) return false;
+        if (s.charAt(h)=='+' || s.charAt(h)=='-') h++;
+        boolean isNum = false;
+        boolean isExp = false;
+        boolean isDot = false;
+        while(h<=t){
+            char c = s.charAt(h);
+            if (isDigit(c)){
+                isNum = true;
+            }
+            else if (c=='e' || c=='E'){
+                if (isExp || !isNum) return false;
+                isExp = true; isNum = false;
+            }
+            else if (c=='.'){
+                if (isDot || isExp) return false;
+                isDot = true;
+            }
+            else if (c=='+' || c=='-'){
+                if (s.charAt(h-1)!='e' || s.charAt(h-1)=='E') return false;
+            }
+            else{
+                return false;
+            }
+            h++;
+        }
+        return isNum;
+    }
+    public boolean isDigit(char c){
+        if ('0'<=c && c<='9') return true;
+        return false;
+    }
+}

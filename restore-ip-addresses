@@ -1,0 +1,41 @@
+public class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> result = new ArrayList<String>();
+        if (s.length()<4 || s.length() > 12) return result;
+        
+        List<String> cur = new ArrayList<String>();
+        
+        restoreIpAddressesHelper(s, 0, result, cur);
+        return result;
+    }
+    public void restoreIpAddressesHelper (String s, int start, List<String> result, List<String> cur){
+        if (cur.size() == 4){
+            if (start != s.length()) return;
+            result.add(validateIP(cur));
+            return;
+        }
+        
+        for(int i=start; i<s.length() && i<= start+3; i++){
+            String tmp = s.substring(start, i+1);
+            if(isValid(tmp)){
+                cur.add(tmp);
+                restoreIpAddressesHelper(s, i+1, result, cur);
+                cur.remove(cur.size()-1);
+            }
+        }
+    }
+    public boolean isValid(String s){
+        if (s.charAt(0) == '0') return s.equals("0");
+        int d = Integer.valueOf(s);
+        return 0<=d && d<=255;
+    }
+    public String validateIP(List<String> cur){
+        StringBuffer sb = new StringBuffer();
+        for (String s : cur){
+            sb.append(s);
+            sb.append(".");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+}

@@ -1,0 +1,25 @@
+public class Solution {
+    public int longestConsecutive(int[] num) {
+        if (num==null || num.length==0) return 0;
+        
+        HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
+        for (int i : num) hm.put(i,0);
+        int maxlen = 1;
+        for (int i : num){
+            if (hm.get(i) == 1) continue;
+            int cur_max = 1;
+            int tmpnum = i;
+            while(hm.containsKey(tmpnum-1)){
+                cur_max++;
+                hm.put(tmpnum--,1);
+            }
+            tmpnum = i;
+            while(hm.containsKey(tmpnum+1)){
+                cur_max++;
+                hm.put(tmpnum++,1);
+            }
+            maxlen = Math.max(maxlen, cur_max);
+        }
+        return maxlen;
+    }
+}

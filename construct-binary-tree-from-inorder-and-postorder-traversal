@@ -1,0 +1,40 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        if (inorder == null || inorder.length == 0 ) return null;
+        
+        return buildTreeHelper(inorder, postorder);
+    }
+    private TreeNode buildTreeHelper(int[] inorder, int[] postorder){
+        if (inorder.length == 0) return null;
+        
+        TreeNode par = new TreeNode(postorder[postorder.length-1]);
+    
+        int index = findIndex(inorder, postorder[postorder.length-1]);
+        if (index>0){
+            int[] inorder_left = Arrays.copyOfRange(inorder, 0, index);
+            int[] postorder_left = Arrays.copyOfRange(postorder, 0, index);
+            par.left = buildTreeHelper(inorder_left, postorder_left);
+        }
+        if (index<postorder.length){
+            int[] inorder_right = Arrays.copyOfRange(inorder, index+1, inorder.length);
+            int[] postorder_right = Arrays.copyOfRange(postorder, index, postorder.length-1);
+            par.right = buildTreeHelper(inorder_right, postorder_right);
+        }
+        return par;
+    }
+    private int findIndex(int[] arr, int val){
+        for (int i=0; i<arr.length; i++){
+            if (arr[i] == val) return i;
+        }
+        return -1;
+    }
+}

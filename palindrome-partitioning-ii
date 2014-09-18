@@ -1,0 +1,26 @@
+// another Dynamic Programming problem
+public class Solution {
+    public int minCut(String s) {
+        if (s==null || s.length()==0 || s.length()==1) return 0;
+        int len = s.length();
+        int[] mins = new int[len+1];
+        boolean[][] isP = new boolean[len][len];
+        for (int i=0; i<=len; i++) mins[i] = len-i;
+        for (int i=0; i<len; i++)
+            for (int j=0; j<len; j++)
+                isP[i][j] = false;
+        
+        // DP
+        for (int i=len-1; i>=0; i--){
+            for (int j=i; j<len; j++){
+                if (s.charAt(i) == s.charAt(j) && (j-i<2 || isP[i+1][j-1]) ){
+                    isP[i][j] = true;
+                    mins[i] = Math.min(mins[i], mins[j+1]+1);
+                }
+            }
+        }
+        return mins[0]-1;
+    }
+}
+
+

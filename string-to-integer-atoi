@@ -1,0 +1,26 @@
+public class Solution {
+    public int atoi(String str) {
+        if (str==null) return 0;
+        str = str.trim();
+        if (str.length()==0) return 0;
+        
+        long result = 0; // here has to be long
+        char[] chars = str.toCharArray();
+        int s = 0;
+        int e = chars.length-1;
+        int sign = 1;
+        if (chars[s] == '+') s++;
+        else if (chars[s] == '-') { sign=-1; s++; }
+        while(s<=e){
+            if ('0'<=chars[s] && chars[s]<='9'){
+                result = result*10+(chars[s]-'0');
+                s++;
+                if (result > Integer.MAX_VALUE && sign==1)  break;
+            }
+            else break;
+        }
+        if (sign*result > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        else if (sign*result < Integer.MIN_VALUE) return Integer.MIN_VALUE;
+        else return sign*(int)result; // here has to add (int) sign
+    }
+}

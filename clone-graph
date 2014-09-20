@@ -1,0 +1,40 @@
+/**
+ * Definition for undirected graph.
+ * class UndirectedGraphNode {
+ *     int label;
+ *     List<UndirectedGraphNode> neighbors;
+ *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * };
+ */
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if (node == null) return null;
+        
+        HashMap<UndirectedGraphNode,UndirectedGraphNode> map = new HashMap<UndirectedGraphNode,UndirectedGraphNode>();
+        ArrayList<UndirectedGraphNode> list = new ArrayList<UndirectedGraphNode>();
+        
+        //clone nodes
+        int start = 0;
+        map.put(node, new UndirectedGraphNode(node.label));
+        list.add(node);
+        while(start<list.size()){
+            UndirectedGraphNode curHead = list.get(start);
+            for (UndirectedGraphNode curNode : curHead.neighbors){
+                if (!map.containsKey(curNode)){
+                    map.put(curNode,new UndirectedGraphNode(curNode.label));
+                    list.add(curNode);
+                }
+            }
+            start++;
+        }
+        //clone relationship
+        for (UndirectedGraphNode curNode : list){
+            UndirectedGraphNode copiedNode = map.get(curNode);
+            for (int i=0; i<curNode.neighbors.size(); i++){
+                UndirectedGraphNode curNei = curNode.neighbors.get(i);
+                copiedNode.neighbors.add(map.get(curNei));
+            }
+        }
+        return map.get(node);
+    }
+}

@@ -1,0 +1,40 @@
+//word-ladder
+// BFS graph theory
+
+public class Solution {
+    public int ladderLength(String start, String end, Set<String> dict) {
+        if (start==null || end==null || dict.size()==0 ) return 0;
+        
+        Queue<String> wordQueue = new LinkedList<String>();
+        Queue<Integer> distanceQueue = new LinkedList<Integer>();
+ 
+        wordQueue.add(start);
+        distanceQueue.add(1);
+ 
+ 
+        while(!wordQueue.isEmpty()){
+            String curWord = wordQueue.poll();
+            Integer curDistance = distanceQueue.poll();
+ 
+            if(curWord.equals(end)){
+                return curDistance;
+            }
+ 
+            for(int i=0; i<curWord.length(); i++){
+                char[] curCharArr = curWord.toCharArray();
+                for(char c='a'; c<='z'; c++){
+                    curCharArr[i] = c;
+ 
+                    String newWord = new String(curCharArr);
+                    if(dict.contains(newWord)){
+                        wordQueue.add(newWord);
+                        distanceQueue.add(curDistance+1);
+                        dict.remove(newWord);
+                    }
+                }
+            }
+        }
+ 
+        return 0;
+    }
+}

@@ -1,0 +1,60 @@
+public class Solution {
+    public List<String> wordBreak(String s, Set<String> dict) {
+        List<String> result = new ArrayList<String>();
+        if (s==null || s.length()==0) return result;
+        if (!hasWordBreak(s, dict)) return result;
+        
+        List<String> cur = new ArrayList<String>();
+        dfsHelper(s, dict, result, cur, 0);
+        return result;   
+    }
+    
+    private void dfsHelper(String s, Set<String> dict, List<String> ret, List<String> cur, int start){
+        int n = s.length();
+
+        for (int i=start; i<=n; i++) {
+            String curWord = s.substring(start,i);
+            if (dict.contains(curWord)) {
+                cur.add(curWord);
+                if (i==n) {
+                    int m = cur.size();
+                    String str = new String();
+                    for(int j=0; j<m; j++) {
+                        if (j!=0) {
+                            str += " ";
+                        }
+                        str += cur.get(j);
+                    }
+                    ret.add(str);
+                } else {
+                    dfsHelper(s, dict, ret, cur, i);
+                }
+                cur.remove(cur.size()-1);
+            }
+        }
+    }
+    
+    public boolean hasWordBreak(String s, Set<String> dict) {
+        if(s == null) { return false; }
+        if(dict == null) { return false; }
+        if(dict.size() == 0) { return false; }
+        
+        //boolean result = false;
+        int len = s.length();
+        boolean[] checked = new boolean[len];
+        checked[0] = true; //
+        
+        for (int i=1; i<=len; i++) {
+            checked[i-1] = dict.contains(s.substring(0,i));
+            if (!checked[i-1]) {
+                for (int j=0; j<i; j++) {
+                    //boolean isPosb = dict.contains(s.substring(0,j)) && dict.contains(s.substring(j,i));
+                    boolean isLeft = checked[j];
+                    boolean isRight = dict.contains(s.substring(j+1,i));
+                    if (isLeft && isRight) { checked[i-1] = true; }
+                }
+            }
+        }
+        return checked[len-1];
+    }
+}

@@ -1,0 +1,50 @@
+/**
+  dummy head;
+  fast.next != null
+*/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode rotateRight(ListNode head, int n) {
+        if (head == null || head.next == null) return head;
+        
+        int length = getLength(head);
+        n = n % length;
+        
+        ListNode dummy = new ListNode(length);
+        dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+        int i = 0;
+        while(fast!=null && i<n) {
+            fast = fast.next;
+            i++;
+        }
+        while(fast!=null && fast.next!=null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        fast.next = dummy.next;
+        dummy.next = slow.next;
+        slow.next = null;
+        return dummy.next;
+        
+    }
+    private int getLength(ListNode head){
+        int length = 0;
+        while (head != null) {
+            length ++;
+            head = head.next;
+        }
+        return length;
+    }
+}

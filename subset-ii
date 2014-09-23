@@ -1,0 +1,21 @@
+public class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] num) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (num==null || num.length==0) return result;
+        
+        List<Integer> curList = new ArrayList<Integer>();
+        Arrays.sort(num);
+        subsetsWithDupHelper(num, result, curList, 0);
+        return result;
+    }
+    
+    private void subsetsWithDupHelper(int[] num, List<List<Integer>> result, List<Integer> curList, int start){
+        result.add(new ArrayList(curList));
+        for (int i=start; i<num.length; i++){
+            if (i!=start && num[i]==num[i-1]) continue;
+            curList.add(num[i]);
+            subsetsWithDupHelper(num, result, curList, i+1);
+            curList.remove(curList.size()-1);
+        }
+    }
+}

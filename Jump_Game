@@ -1,0 +1,18 @@
+public class Solution {
+    public boolean canJump(int[] A) {
+        if (A == null || A.length==0) return false;
+        
+        boolean[] jumps = new boolean[A.length];
+        jumps[0] = true;
+        for (int i=1; i<A.length; i++){
+            for (int j=i-1; j>=0; j--){
+                if (jumps[j] && A[j]>=i-j) {
+                    jumps[i] = true; 
+                    break;
+                }
+                else jumps[i] = false;
+            }
+        }
+        return jumps[A.length-1];
+    }
+}

@@ -1,0 +1,20 @@
+public class Solution {
+    public int jump(int[] A) {
+        if (A==null && A.length==0) return 0;
+        
+        int[] mins = new int[A.length];
+        //Arrays.fill(mins, Integer.MAX_VALUE);
+        mins[0] = 0; // can't be 1 here
+        
+        for (int i=1; i<A.length; i++){
+            mins[i] = Integer.MAX_VALUE;
+            for (int j=0; j<i; j++){ // here can't be back-order
+                if (mins[j]<Integer.MAX_VALUE && A[j]>=i-j){ 
+                    mins[i] = mins[j]+1;
+                    break; 
+                }
+            }
+        }
+        return mins[A.length-1];
+    }
+}

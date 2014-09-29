@@ -1,0 +1,24 @@
+public class Solution {
+    public String countAndSay(int n) {
+        if (n<=0) return "";
+        return countAndSayHelper("1", n-1);
+    }
+    private String countAndSayHelper(String s, int n){
+        if (n==0) return s;
+        StringBuffer sb = new StringBuffer();
+        int len = s.length();
+        int c=1, i=0, j=i+1;
+        while (i<len && j<len) {
+            if (s.charAt(i) == s.charAt(j)) { j++; continue; }
+            c = j-i;
+            char ch = (char)(((int)'0')+c);
+            sb.append(ch);
+            sb.append(s.charAt(i));
+            i=j; j=i+1;
+        }
+        char ch = (char)(((int)'0')+(len-i));
+        sb.append(ch);
+        sb.append(s.charAt(i));
+        return countAndSayHelper(sb.toString(), n-1);
+    }
+}

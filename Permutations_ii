@@ -1,0 +1,28 @@
+public class Solution {
+    public List<List<Integer>> permuteUnique(int[] num) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (num == null || num.length == 0) return result;
+        
+        Arrays.sort(num);
+        List<Integer> cur = new ArrayList<Integer>();
+        boolean[] checked = new boolean[num.length];
+        Arrays.fill(checked, false);
+        helper(num, checked, result, cur);
+        return result;
+    }
+    
+    private void helper(int[] num, boolean[] checked, List<List<Integer>> result, List<Integer> cur){
+        if (cur.size() == num.length){
+            result.add(new ArrayList<Integer>(cur));
+            return;
+        }
+        for (int i=0; i<num.length; i++){
+            if (checked[i] || (i != 0 && num[i] == num[i - 1] && !checked[i - 1])) continue;
+            cur.add(num[i]);
+            checked[i] = true;
+            helper(num, checked, result, cur);
+            cur.remove(cur.size()-1);
+            checked[i] = false;
+        }
+    }
+}

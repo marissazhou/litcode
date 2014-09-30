@@ -7,7 +7,7 @@ public class Solution {
         for (; i >= 0; i--) { // i records turning point
             if (num[i + 1] > num[i]) {
                 int j;
-                for (j = len - 1; j > i - 1; j--) { // j records first larger num
+                for (j = len - 1; j > i+1; j--) { // j records first larger num from the tail to the element before i+1
                     if (num[j] > num[i]) {
                         break;
                     }

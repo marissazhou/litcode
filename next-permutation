@@ -1,0 +1,40 @@
+public class Solution {
+    public void nextPermutation(int[] num) {
+        if (num == null || num.length == 0) return;
+        
+        int len = num.length;
+        int i = len - 2;
+        for (; i >= 0; i--) { // i records turning point
+            if (num[i + 1] > num[i]) {
+                int j;
+                for (j = len - 1; j > i - 1; j--) { // j records first larger num
+                    if (num[j] > num[i]) {
+                        break;
+                    }
+                }
+                swap(num, i, j);
+                reverse(num, i + 1, len-1);
+                return;
+            }
+        }
+        reverse(num, 0, num.length-1);
+    }
+    public int findNextMax(int[] num, int s, int e) {
+        if (s>num.length-1) return e;
+        int idx = e;
+        while(idx>s && num[s-1]>num[idx]){
+            idx--;
+        }
+        return idx;
+    }
+    public void swap(int[] num, int i, int j) {
+        int temp = num[i];
+        num[i] = num[j];
+        num[j] = temp;
+    }
+    private void reverse(int[] num, int s, int e){
+        for (int i=s, j=e; i<j; i++, j--){
+            swap(num, i, j);
+        }
+    }
+}

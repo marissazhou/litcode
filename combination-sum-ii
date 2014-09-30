@@ -1,0 +1,27 @@
+public class Solution {
+    public List<List<Integer>> combinationSum2(int[] num, int target) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (num == null || num.length == 0 || target < 0) return result;
+        List<Integer> cur = new ArrayList<Integer>();
+        Arrays.sort(num);
+        helper(num, target, result, cur, 0);
+        return result;
+    }
+    
+    private void helper(int[] num, int target, List<List<Integer>> result, List<Integer> cur, int idx) {
+        if (target == 0){
+            result.add(new ArrayList(cur));
+        }
+        if (idx >= num.length || target < 0) {
+            return;
+        }
+        int prev = -1;
+        for (int i = idx; i < num.length; i++) {
+            if (prev == num[i]) continue;
+            cur.add(num[i]);
+            helper(num, target-num[i], result, cur, i+1);
+            cur.remove(cur.size()-1);
+            prev = num[i];
+        }
+    }
+}

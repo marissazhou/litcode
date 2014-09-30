@@ -1,0 +1,23 @@
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        if (s == null || p == null) return false;
+        
+        int ls = s.length();
+        int lp = p.length();
+        int star = -1; // record star index in p
+        int ss = -1; // record relevant index of star in s
+        int i=0, j=0; //i<ls && j<lp
+        while(i<ls){
+            if (j<lp && (p.charAt(j) == '?' || s.charAt(i) == p.charAt(j))) {i++; j++;}
+            else if (j<lp && p.charAt(j) == '*') {
+                ss = i; star = j++;
+            }
+            else if (star != -1) {
+                j = star+1; i = ++ss;
+            }
+            else return false;
+        }
+        while (j<lp && p.charAt(j) == '*') j++;
+        return j==lp;
+    }
+}

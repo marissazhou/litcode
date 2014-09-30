@@ -1,0 +1,22 @@
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        if (s == null || p == null) return false;
+        
+        int ls = s.length();
+        int lp = p.length();
+        return isMatchHelper(s, p, ls, lp, 0, 0);
+    }
+    public boolean isMatchHelper(String s, String p, int ls, int lp, int is, int ip) {
+        if (is < ls && ip == lp) return false;
+        if (is >= ls && ip >= lp) return true;
+        if (is >= ls) {
+            int i = ip;
+            for (; i<lp; i++) if(p.charAt(i) != '*') break;
+            if (i == lp) return true;
+            else return false;
+        }
+        if (p.charAt(ip) == '?' || s.charAt(is) == p.charAt(ip)) return isMatchHelper(s, p, ls, lp, is+1, ip+1);
+        if (p.charAt(ip) == '*') return (isMatchHelper(s, p, ls, lp, is, ip+1) || isMatchHelper(s, p, ls, lp, is+1, ip+1));
+        return false;
+    }
+}
